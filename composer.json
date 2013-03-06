@@ -1,5 +1,5 @@
 {
-    "name":"pedro-teixeira/grid",
+    "name":"pedro-teixeira/grid-bundle",
     "type":"symfony-bundle",
     "description":"Ajax grid for Symfony2",
     "keywords":["datagrid", "grid"],
@@ -22,5 +22,5 @@
             "PedroTeixeira\\Grid":""
         }
     },
-    "target-dir":"PedroTeixeira/Grid"
+    "target-dir":"PedroTeixeira/Bundle/GridBundle"
 }
