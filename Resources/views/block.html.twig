@@ -1,0 +1,64 @@
+{# GRID CSS #}
+{% block grid_css %}
+    {% stylesheets
+        '@PedroTeixeiraGridBundle/Resources/public/less/grid.less'
+        output='css/pedrotexeira-grid.css'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{# GRID HTML #}
+{% block grid_html %}
+    <div class="pedroteixeira-grid-wrapper" id="{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper">
+        <form id="{{ view.grid.name | raw }}-pedroteixeira-grid-form">
+            <table class="table table-hover table-bordered table-condensed pedroteixeira-grid-table" id="{{ view.grid.name | raw }}-pedroteixeira-grid-table">
+                <thead>
+                    <tr>
+                        {% for column in view.grid.columns %}
+                            <th>{{ column.name }}</th>
+                        {% endfor %}
+                    </tr>
+                    <tr class="row-filters">
+                        {% for column in view.grid.columns %}
+                            <th>{{ column.renderFilter | raw }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row-empty">
+                        <td colspan="{{ view.grid.getColumnsCount }}">{% trans %}There is no rows.{% endtrans %}</td>
+                    </tr>
+                    <tr class="row-footer">
+                        <td colspan="{{ view.grid.getColumnsCount }}">Tools</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}
+
+{# GRID JS #}
+{% block grid_js %}
+    {% javascripts
+        '@PedroTeixeiraGridBundle/Resources/public/js/grid.js'
+        output='js/pedrotexeira-grid.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        $(function () {
+            $('#{{ view.grid.name | raw }}-pedroteixeira-grid-form').grid({
+                ajaxUrl: '{{ view.grid.url }}'
+            })
+        });
+    </script>
+{% endblock %}
+
+{# GRID #}
+{% block grid %}
+    {{ block("grid_css") }}
+    {{ block("grid_html") }}
+    {{ block("grid_js") }}
+{% endblock %}
