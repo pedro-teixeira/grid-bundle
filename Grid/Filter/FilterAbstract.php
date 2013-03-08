@@ -176,6 +176,8 @@ abstract class FilterAbstract
     /**
      * Return operator
      *
+     * @todo Merge all the reflections in one single method
+     *
      * @return \PedroTeixeira\Bundle\GridBundle\Grid\Filter\Operator\OperatorAbstract|bool
      *
      * @throws \Exception

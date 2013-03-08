@@ -165,6 +165,8 @@ class Column
     /**
      * Return filter
      *
+     * @todo Merge all the reflections in one single method
+     *
      * @return \PedroTeixeira\Bundle\GridBundle\Grid\Filter\FilterAbstract|bool
      *
      * @throws \Exception
@@ -238,7 +240,10 @@ class Column
     /**
      * Return render
      *
+     * @todo Merge all the reflections in one single method
+     *
      * @return \PedroTeixeira\Bundle\GridBundle\Grid\Render\RenderAbstract|bool
+     *
      * @throws \Exception
      */
     public function getRender()
