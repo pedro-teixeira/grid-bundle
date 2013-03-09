@@ -12,7 +12,7 @@
 {% block grid_html %}
     <div class="pedroteixeira-grid-wrapper" id="{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper">
         <form id="{{ view.grid.name | raw }}-pedroteixeira-grid-form">
-            <table class="table table-hover table-bordered table-condensed pedroteixeira-grid-table" id="{{ view.grid.name | raw }}-pedroteixeira-grid-table">
+            <table class="table table-hover table-bordered pedroteixeira-grid-table" id="{{ view.grid.name | raw }}-pedroteixeira-grid-table">
                 <thead>
                     <tr>
                         {% for column in view.grid.columns %}
@@ -25,14 +25,27 @@
                         {% endfor %}
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="row-empty">
+                <tbody class="table-condensed row-result"></tbody>
+                <tbody class="row-empty">
+                    <tr>
                         <td colspan="{{ view.grid.getColumnsCount }}">{% trans %}There is no rows.{% endtrans %}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr class="row-footer">
-                        <td colspan="{{ view.grid.getColumnsCount }}">Tools</td>
+                        <td colspan="{{ view.grid.getColumnsCount }}">
+                            <button id="refresh-button" class="btn btn-mini" type="button">
+                                <i class="icon-refresh"></i> {% trans %}Update{% endtrans %}
+                            </button>
+
+                            <button id="refresh-filters-button" class="btn btn-mini" type="button">
+                                <i class="icon-filter"></i> {% trans %}Refresh Filters{% endtrans %}
+                            </button>
+
+                            <button id="export-button" class="btn btn-mini" type="button">
+                                <i class="icon-download"></i> {% trans %}Export{% endtrans %}
+                            </button>
+                        </td>
                     </tr>
                 </tfoot>
             </table>

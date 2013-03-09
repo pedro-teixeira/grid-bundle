@@ -27,8 +27,8 @@ class DateRange extends Date
      */
     public function render()
     {
-        $html  = '<p>' . $this->getFromLabel() . ': <input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="' . $this->getInputType() . '" value="' . $this->getValue() . '"></p>';
-        $html .= '<p>' . $this->getToLabel() . ': <input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="' . $this->getInputType() . '" value="' . $this->getValue() . '"></p>';
+        $html  = '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="' . $this->getInputType() . '" value="' . $this->getValue() . '"> ';
+        $html .= '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="' . $this->getInputType() . '" value="' . $this->getValue() . '">';
 
         return $html;
     }
