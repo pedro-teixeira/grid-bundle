@@ -14,7 +14,7 @@
         this.totalRows = 0
         this.totalPages = 0
         this.page = 1
-        this.limit = 10
+        this.limit = 20
         this.listen()
         this.ajax()
     }

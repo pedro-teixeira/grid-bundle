@@ -207,7 +207,7 @@ abstract class GridAbstract
     public function getData()
     {
         $page       = $this->request->query->get('page', 1);
-        $limit      = $this->request->query->get('limit', 10);
+        $limit      = $this->request->query->get('limit', 20);
         $sortIndex  = $this->request->query->get('sort');
         $sortOrder  = $this->request->query->get('sort_order');
         $filters    = $this->request->query->get('filters', array());
@@ -216,7 +216,7 @@ abstract class GridAbstract
         $page = ($page <= 0 ? 1 : $page);
 
         $limit = intval(abs($limit));
-        $limit = ($limit <= 0 ? 10 : $limit);
+        $limit = ($limit <= 0 ? 20 : $limit);
 
         /** @todo Remove the unnecessary iterations */
 
