@@ -14,9 +14,9 @@
         <form id="{{ view.grid.name | raw }}-pedroteixeira-grid-form">
             <table class="table table-hover table-bordered pedroteixeira-grid-table" id="{{ view.grid.name | raw }}-pedroteixeira-grid-table">
                 <thead>
-                    <tr>
+                    <tr id="row-filters-label">
                         {% for column in view.grid.columns %}
-                            <th>{{ column.name }}</th>
+                            <th id="{{ column.field }}" data-index="{{ column.index }}">{{ column.name }}</th>
                         {% endfor %}
                     </tr>
                     <tr class="row-filters">
@@ -45,6 +45,25 @@
                             <button id="export-button" class="btn btn-mini" type="button">
                                 <i class="icon-download"></i> {% trans %}Export{% endtrans %}
                             </button>
+
+                            <div id="pagination" class="pull-right">
+                                <button id="pagination-back-button" class="btn btn-mini" type="button">
+                                    <i class="icon-chevron-left"></i>
+                                </button>
+                                <input id="pagination-page" type="text" value="0">
+                                <button id="pagination-forward-button" class="btn btn-mini" type="button">
+                                    <i class="icon-chevron-right"></i>
+                                </button>
+
+                                {% trans %}of{% endtrans %}
+                                <span id="pagination-total-pages">0</span>
+                                {% trans %}page(s) with{% endtrans %}
+                                <span id="pagination-total">0</span>
+                                {% trans %}result(s){% endtrans %}.
+                                {% trans %}Showing{% endtrans %}
+                                <input id="pagination-limit" type="text" value="0">
+                                {% trans %}result(s) per page{% endtrans %}.
+                            </div>
                         </td>
                     </tr>
                 </tfoot>

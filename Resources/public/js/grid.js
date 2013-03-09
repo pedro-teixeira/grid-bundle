@@ -9,6 +9,12 @@
         this.options = $.extend({}, $.fn.grid.defaults, options)
         this.ajaxUrl = this.options.ajaxUrl || this.ajaxUrl
         this.exportFlag = false
+        this.sortIndex = ''
+        this.sortOrder = 'ASC'
+        this.totalRows = 0
+        this.totalPages = 0
+        this.page = 1
+        this.limit = 10
         this.listen()
         this.ajax()
     }
@@ -22,14 +28,21 @@
             var filters = this.$element.find('form').serializeArray(),
                 tbody = this.$element.find('table').find('tbody.row-result'),
                 emptyTbody = this.$element.find('table').find('tbody.row-empty'),
-                thisClass = this;
+                thisClass = this
+
+            this.page = this.$element.find('#pagination #pagination-page').val()
+            this.limit = this.$element.find('#pagination #pagination-limit').val()
 
             $.ajax({
                 url:this.ajaxUrl,
                 type:'get',
                 data:{
+                    'sort': this.sortIndex,
+                    'sort_order': this.sortOrder,
                     'export': this.exportFlag,
-                    'filters': filters
+                    'filters': filters,
+                    'page': this.page,
+                    'limit': this.limit
                 },
                 dataType:'json',
                 beforeSend:function (data) {
@@ -38,6 +51,13 @@
                 success:function (data) {
 
                     thisClass.gridUnlock()
+
+                    thisClass.totalRows = data.row_count
+                    thisClass.totalPages = data.page_count
+                    thisClass.limit = data.page_limit
+                    thisClass.page = data.page
+
+                    thisClass.paginationProcess()
 
                     var html = ''
 
@@ -78,9 +98,14 @@
             this.$element.find('form').on('submit', $.proxy(this.submit, this))
             this.$element.find('select').on('change', $.proxy(this.ajax, this))
 
-            $('#refresh-button').on('click', $.proxy(this.ajax, this))
-            $('#refresh-filters-button').on('click', $.proxy(this.refreshFilters, this))
-            $('#export-button').on('click', $.proxy(this.export, this))
+            this.$element.find('#refresh-button').on('click', $.proxy(this.ajax, this))
+            this.$element.find('#refresh-filters-button').on('click', $.proxy(this.refreshFilters, this))
+            this.$element.find('#export-button').on('click', $.proxy(this.export, this))
+            this.$element.find('#row-filters-label th').on('click', $.proxy(this.processOrder, this))
+
+            this.$element.find('#pagination-back-button').on('click', $.proxy(this.paginationBack, this))
+            this.$element.find('#pagination-forward-button').on('click', $.proxy(this.paginationForward, this))
+
 
             return this
         }
@@ -106,17 +131,97 @@
         }
 
         , gridLock:function () {
-            this.$element.find('input, select, textarea, button')
-            this.$element.attr('disabled', true)
+            this.$element.find('input, select, textarea, button').attr('disabled', true)
             this.$element.css({opacity:0.5});
 
             return this
         }
 
         , gridUnlock:function () {
-            this.$element.find('input, select, textarea, button')
-            this.$element.attr('disabled', false)
+            this.$element.find('input, select, textarea, button').attr('disabled', false)
             this.$element.css({opacity:1});
+
+            return this
+        }
+
+        , processOrder:function (event) {
+
+            var element = $(event.target)
+                sortIndex = element.data('index')
+
+            if (sortIndex == '') {
+                return false
+            }
+
+            if (this.sortIndex == sortIndex) {
+                if (this.sortOrder == 'DESC') {
+                    this.sortOrder = 'ASC'
+                } else {
+                    this.sortOrder = 'DESC'
+                }
+            } else {
+                this.sortOrder = 'ASC'
+                this.sortIndex = sortIndex
+            }
+
+            this.processOrderIcon(element)
+
+            this.ajax()
+
+            return this
+        }
+
+        , processOrderIcon:function (element) {
+            $.each(this.$element.find('#row-filters-label th i'), function(i, item) {
+                item.remove()
+            })
+
+            if (this.sortOrder == 'DESC') {
+                element.append(' <i class="icon-chevron-down"></i>')
+            } else {
+                element.append(' <i class="icon-chevron-up"></i>')
+            }
+
+            return this
+        }
+
+        , paginationProcess:function () {
+
+            this.$element.find('#pagination #pagination-back-button').attr('disabled', false)
+            this.$element.find('#pagination #pagination-forward-button').attr('disabled', false)
+
+            if (this.page <= 1) {
+                this.$element.find('#pagination #pagination-back-button').attr('disabled', true)
+            }
+
+            if (this.page >= this.totalPages) {
+                this.$element.find('#pagination #pagination-forward-button').attr('disabled', true)
+            }
+
+            this.$element.find('#pagination #pagination-page').val(this.page)
+            this.$element.find('#pagination #pagination-total-pages').html(this.totalPages)
+            this.$element.find('#pagination #pagination-total').html(this.totalRows)
+            this.$element.find('#pagination #pagination-limit').val(this.limit)
+
+            this.$element.find('#pagination input').attr('disabled', false)
+
+            return this
+        }
+
+        , paginationBack:function () {
+            this.page --
+            this.$element.find('#pagination #pagination-page').val(this.page)
+
+            this.ajax()
+
+            return this
+        }
+
+        , paginationForward:function () {
+            this.page ++
+            this.$element.find('#pagination #pagination-page').val(this.page)
+
+            this.ajax()
 
             return this
         }

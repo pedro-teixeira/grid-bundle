@@ -208,10 +208,15 @@ abstract class GridAbstract
     {
         $page       = $this->request->query->get('page', 1);
         $limit      = $this->request->query->get('limit', 10);
-        $limit      = intval(abs($limit));
         $sortIndex  = $this->request->query->get('sort');
         $sortOrder  = $this->request->query->get('sort_order');
         $filters    = $this->request->query->get('filters', array());
+
+        $page = intval(abs($page));
+        $page = ($page <= 0 ? 1 : $page);
+
+        $limit = intval(abs($limit));
+        $limit = ($limit <= 0 ? 10 : $limit);
 
         /** @todo Remove the unnecessary iterations */
 
@@ -249,6 +254,7 @@ abstract class GridAbstract
         $totalCount = Paginate::count($this->getQueryBuilder()->getQuery());
 
         $totalPages = ceil($totalCount / $limit);
+        $page = ($page > $totalPages ? $totalPages : $page);
 
         $queryOffset = (($page * $limit) - $limit);
 
@@ -259,6 +265,7 @@ abstract class GridAbstract
         $response = array(
             'page'          => $page,
             'page_count'    => $totalPages,
+            'page_limit'    => $limit,
             'row_count'     => $totalCount,
             'rows'          => array()
         );
