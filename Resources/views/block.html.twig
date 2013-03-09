@@ -29,10 +29,12 @@
                     <tr class="row-empty">
                         <td colspan="{{ view.grid.getColumnsCount }}">{% trans %}There is no rows.{% endtrans %}</td>
                     </tr>
+                </tbody>
+                <tfoot>
                     <tr class="row-footer">
                         <td colspan="{{ view.grid.getColumnsCount }}">Tools</td>
                     </tr>
-                </tbody>
+                </tfoot>
             </table>
         </form>
     </div>
@@ -49,7 +51,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $('#{{ view.grid.name | raw }}-pedroteixeira-grid-form').grid({
+            $('#{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper').grid({
                 ajaxUrl: '{{ view.grid.url }}'
             })
         });

@@ -15,6 +15,11 @@ class Column
     /**
      * @var string
      */
+    protected $field;
+
+    /**
+     * @var string
+     */
     protected $index;
 
     /**
@@ -80,6 +85,26 @@ class Column
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $field
+     *
+     * @return Column
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getField()
+    {
+        return $this->field;
     }
 
     /**

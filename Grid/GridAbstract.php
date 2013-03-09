@@ -211,7 +211,27 @@ abstract class GridAbstract
         $limit      = intval(abs($limit));
         $sortIndex  = $this->request->query->get('sort');
         $sortOrder  = $this->request->query->get('sort_order');
-        $filters    = $this->request->query->get('filters');
+        $filters    = $this->request->query->get('filters', array());
+
+        /** @todo Remove the unnecessary iterations */
+
+        // Check and change cascade array in get
+        foreach ($filters as $key => $filter) {
+            if (strpos($filter['name'], '[]') !== false) {
+
+                unset($filters[$key]);
+                $name = str_replace('[]', '', $filter['name']);
+
+                if (!isset($filters[$name])) {
+                    $filters[$name] = array(
+                        'name' => $name,
+                        'value' => array($filter['value'])
+                    );
+                } else {
+                    $filters[$name]['value'][] = $filter['value'];
+                }
+            }
+        }
 
         foreach ($filters as $filter) {
             /** @var \PedroTeixeira\Bundle\GridBundle\Grid\Column $column */
@@ -239,7 +259,8 @@ abstract class GridAbstract
         $response = array(
             'page'          => $page,
             'page_count'    => $totalPages,
-            'row_count'     => $totalCount
+            'row_count'     => $totalCount,
+            'rows'          => array()
         );
 
         foreach ($this->getQueryBuilder()->getQuery()->getResult() as $key => $row) {
@@ -252,20 +273,26 @@ abstract class GridAbstract
                 $rowColumn = ' ';
 
                 // Object
-                if (method_exists($row, 'get' . ucfirst($column->getIndex()))) {
+                if (method_exists($row, 'get' . ucfirst($column->getField()))) {
 
-                    $method = 'get' . ucfirst($column->getIndex());
+                    $method = 'get' . ucfirst($column->getField());
                     $rowColumn = $row->$method();
 
-                // Array
-                } else if (array_key_exists($column->getIndex(), $row)) {
+                // Object scalar
+                } else if (array_key_exists(0, $row) && method_exists($row[0], 'get' . ucfirst($column->getField()))) {
 
-                    $rowColumn = $row[$column->getIndex()];
+                    $method = 'get' . ucfirst($column->getField());
+                    $rowColumn = $row[0]->$method();
+
+                // Array
+                } else if (array_key_exists($column->getField(), $row)) {
+
+                    $rowColumn = $row[$column->getField()];
 
                 // Array scalar
-                } else if (array_key_exists(0, $row) && array_key_exists($column->getIndex(), $row[0])) {
+                } else if (array_key_exists(0, $row) && array_key_exists($column->getField(), $row[0])) {
 
-                    $rowColumn = $row[0][$column->getIndex()];
+                    $rowColumn = $row[0][$column->getField()];
 
                 // Twig
                 } else if ($column->getTwig()) {
@@ -278,7 +305,7 @@ abstract class GridAbstract
                     );
                 }
 
-                $rowValue[$column->getIndex()] = $column->getRender()->setValue($rowColumn)->render();
+                $rowValue[$column->getField()] = $column->getRender()->setValue($rowColumn)->render();
             }
 
             $response['rows'][$key] = $rowValue;

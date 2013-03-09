@@ -8,8 +8,8 @@
         this.$element = $(element)
         this.options = $.extend({}, $.fn.grid.defaults, options)
         this.ajaxUrl = this.options.ajaxUrl || this.ajaxUrl
-        this.ajax()
         this.listen()
+        this.ajax()
     }
 
     Grid.prototype = {
@@ -18,7 +18,8 @@
 
         , ajax:function () {
 
-            var filters = this.$element.serializeArray()
+            var filters = this.$element.find('form').serializeArray(),
+                tbody = this.$element.find('table').find('tbody')
 
             $.ajax({
                 url:this.ajaxUrl,
@@ -29,13 +30,24 @@
                 dataType:'json',
                 success:function (data) {
 
+                    var html = ''
+
                     $.each(data.rows, function (i, item) {
-                        alert(item.name)
+                        html += '<tr>'
+                        $.each(item, function(i, value) {
+                            if (value == null) {
+                                value = ''
+                            }
+
+                            html += '<td>' + value + '</td>'
+                        })
+                        html += '</tr>'
                     })
 
+                    tbody.html(html)
                 },
                 error:function (error) {
-                    alert('Error: ' + error)
+                    alert('Error: ' + error.message)
                 }
             })
 
@@ -43,7 +55,7 @@
         }
 
         , listen:function () {
-            this.$element.on('submit', $.proxy(this.submit, this))
+            this.$element.find('form').on('submit', $.proxy(this.submit, this))
             this.$element.find('select').on('change', $.proxy(this.submit, this))
 
             return this
