@@ -48,7 +48,7 @@ Installation
 
 	```twig
 	{% stylesheets
-		'@PedroTeixeiraGridBundle/Resources/public/less/grid.css'
+		'@PedroTeixeiraGridBundle/Resources/public/css/grid.css'
 	%}
 	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
 	{% endstylesheets %}
