@@ -241,7 +241,7 @@ abstract class GridAbstract
         foreach ($filters as $filter) {
             /** @var \PedroTeixeira\Bundle\GridBundle\Grid\Column $column */
             foreach ($this->columns as $column) {
-                if ($filter['name'] == $column->getIndex() && !empty($filter['value'])) {
+                if ($filter['name'] == $column->getIndex() && $filter['value'] != '') {
                     $column->getFilter()->execute($this->getQueryBuilder(), $filter['value']);
                 }
             }
@@ -281,8 +281,18 @@ abstract class GridAbstract
 
                 $rowColumn = ' ';
 
+                // Array
+                if (array_key_exists($column->getField(), $row)) {
+
+                    $rowColumn = $row[$column->getField()];
+
+                // Array scalar
+                } else if (array_key_exists(0, $row) && array_key_exists($column->getField(), $row[0])) {
+
+                    $rowColumn = $row[0][$column->getField()];
+
                 // Object
-                if (method_exists($row, 'get' . ucfirst($column->getField()))) {
+                } else if (method_exists($row, 'get' . ucfirst($column->getField()))) {
 
                     $method = 'get' . ucfirst($column->getField());
                     $rowColumn = $row->$method();
@@ -294,16 +304,6 @@ abstract class GridAbstract
                     $rowColumn = $row[0]->$method();
 
                 // Array
-                } else if (array_key_exists($column->getField(), $row)) {
-
-                    $rowColumn = $row[$column->getField()];
-
-                // Array scalar
-                } else if (array_key_exists(0, $row) && array_key_exists($column->getField(), $row[0])) {
-
-                    $rowColumn = $row[0][$column->getField()];
-
-                // Twig
                 } else if ($column->getTwig()) {
 
                     $rowColumn = $this->templating->render(

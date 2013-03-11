@@ -17,7 +17,9 @@ class Date extends RenderAbstract
      */
     public function render()
     {
-        return $this->getValue()->format($this->getDateFormat());
+        if ($this->getValue() instanceof \DateTime) {
+            return $this->getValue()->format($this->getDateFormat());
+        }
     }
 
     /**

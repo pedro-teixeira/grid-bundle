@@ -5,7 +5,7 @@ namespace PedroTeixeira\Bundle\GridBundle\Grid\Filter\Operator;
 /**
  * Having
  */
-class HavingRange extends OperatorAbstract
+class Having extends OperatorAbstract
 {
     /**
      * @param array $value
