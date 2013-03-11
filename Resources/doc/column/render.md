@@ -1,7 +1,7 @@
 Column Render
 ===
 
-Define the the render to show the values of the column.
+Define the render to show the values of the column.
 
 Default:
 
@@ -19,7 +19,7 @@ public function setupGrid()
 }
 ```
 
-Filter Types
+Render Types
 ------------
 
 * text

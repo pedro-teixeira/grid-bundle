@@ -68,7 +68,7 @@ Create your grid
 
 1. **Create the grid class**
 
-    In your bundle, create a folder named "Grid" (or wathever namespace you want), and then create your grid class.
+    In your bundle, create a folder named "Grid" (or wathever namespace you want) and create your grid definition class.
 
     ```php
     <?php
@@ -82,7 +82,6 @@ Create your grid
 	 */
 	class TestGrid extends GridAbstract
 	{
-
     	/**
      	* {@inheritdoc}
      	*/
