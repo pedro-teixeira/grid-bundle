@@ -104,6 +104,10 @@ class Column
      */
     public function getField()
     {
+        if (empty($this->field)) {
+            $this->field = uniqid();
+        }
+
         return $this->field;
     }
 

@@ -1,0 +1,34 @@
+.pedroteixeira-grid-wrapper table {
+  font-size: 0.85em;
+}
+.pedroteixeira-grid-wrapper table thead th,
+.pedroteixeira-grid-wrapper table thead td,
+.pedroteixeira-grid-wrapper table tbody th,
+.pedroteixeira-grid-wrapper table tbody td {
+  text-align: center;
+  vertical-align: middle;
+}
+.pedroteixeira-grid-wrapper table thead tr th {
+  cursor: pointer;
+}
+.pedroteixeira-grid-wrapper table thead tr th input,
+.pedroteixeira-grid-wrapper table thead tr th select {
+  padding: 0;
+  margin: 0;
+  width: 95%;
+}
+.pedroteixeira-grid-wrapper table thead tr th select {
+  height: auto;
+}
+.pedroteixeira-grid-wrapper table thead tr th input[type=date] {
+  width: auto;
+}
+.pedroteixeira-grid-wrapper table tfoot #pagination {
+  font-size: 0.8em;
+}
+.pedroteixeira-grid-wrapper table tfoot #pagination input {
+  padding: 0;
+  margin: 0;
+  width: 40px;
+  text-align: center;
+}

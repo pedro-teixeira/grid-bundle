@@ -1,13 +1,3 @@
-{# GRID CSS #}
-{% block grid_css %}
-    {% stylesheets
-        '@PedroTeixeiraGridBundle/Resources/public/less/grid.less'
-        output='css/pedrotexeira-grid.css'
-    %}
-    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen"/>
-    {% endstylesheets %}
-{% endblock %}
-
 {# GRID HTML #}
 {% block grid_html %}
     <div class="pedroteixeira-grid-wrapper" id="{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper">
@@ -34,7 +24,8 @@
                 <tfoot>
                     <tr class="row-footer">
                         <td colspan="{{ view.grid.getColumnsCount }}">
-                            <button id="refresh-button" class="btn btn-mini" type="button">
+                            {# Without submit button the form is not submitted with the enter key #}
+                            <button id="refresh-button" class="btn btn-mini" type="submit">
                                 <i class="icon-refresh"></i> {% trans %}Update{% endtrans %}
                             </button>
 
@@ -42,9 +33,10 @@
                                 <i class="icon-filter"></i> {% trans %}Refresh Filters{% endtrans %}
                             </button>
 
-                            <button id="export-button" class="btn btn-mini" type="button">
-                                <i class="icon-download"></i> {% trans %}Export{% endtrans %}
-                            </button>
+                            {# @todo Implement #}
+                            {#<button id="export-button" class="btn btn-mini" type="button">#}
+                                {#<i class="icon-download"></i> {% trans %}Export{% endtrans %}#}
+                            {#</button>#}
 
                             <div id="pagination" class="pull-right">
                                 <button id="pagination-back-button" class="btn btn-mini" type="button">
@@ -74,13 +66,6 @@
 
 {# GRID JS #}
 {% block grid_js %}
-    {% javascripts
-        '@PedroTeixeiraGridBundle/Resources/public/js/grid.js'
-        output='js/pedrotexeira-grid.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
     <script type="text/javascript">
         $(function () {
             $('#{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper').grid({
@@ -92,7 +77,6 @@
 
 {# GRID #}
 {% block grid %}
-    {{ block("grid_css") }}
     {{ block("grid_html") }}
     {{ block("grid_js") }}
 {% endblock %}

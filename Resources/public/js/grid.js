@@ -11,10 +11,10 @@
         this.exportFlag = false
         this.sortIndex = ''
         this.sortOrder = 'ASC'
-        this.totalRows = 0
-        this.totalPages = 0
         this.page = 1
         this.limit = 20
+        this.totalRows = 0
+        this.totalPages = 0
         this.listen()
         this.ajax()
     }
@@ -37,25 +37,24 @@
                 url:this.ajaxUrl,
                 type:'get',
                 data:{
+                    'page':this.page,
+                    'limit':this.limit,
                     'sort': this.sortIndex,
                     'sort_order': this.sortOrder,
                     'export': this.exportFlag,
-                    'filters': filters,
-                    'page': this.page,
-                    'limit': this.limit
+                    'filters': filters
                 },
                 dataType:'json',
                 beforeSend:function (data) {
                     thisClass.gridLock()
                 },
                 success:function (data) {
-
                     thisClass.gridUnlock()
 
+                    thisClass.page = data.page
+                    thisClass.limit = data.page_limit
                     thisClass.totalRows = data.row_count
                     thisClass.totalPages = data.page_count
-                    thisClass.limit = data.page_limit
-                    thisClass.page = data.page
 
                     thisClass.paginationProcess()
 
@@ -81,13 +80,12 @@
                     tbody.html(html)
                 },
                 error:function (error) {
-
                     thisClass.gridUnlock()
 
                     emptyTbody.show()
                     tbody.html('')
 
-                    alert('Error: ' + error.message)
+                    alert('Error: ' + error.statusText)
                 }
             })
 
@@ -106,7 +104,6 @@
             this.$element.find('#pagination-back-button').on('click', $.proxy(this.paginationBack, this))
             this.$element.find('#pagination-forward-button').on('click', $.proxy(this.paginationForward, this))
 
-
             return this
         }
 
@@ -117,7 +114,10 @@
         }
 
         , refreshFilters:function () {
-            this.$element.find('form')[0].reset()
+            $.each(this.$element.find('form'), function (i, form) {
+                form.reset()
+            })
+
             this.ajax()
 
             return this

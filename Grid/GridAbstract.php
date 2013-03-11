@@ -254,6 +254,8 @@ abstract class GridAbstract
         $totalCount = Paginate::count($this->getQueryBuilder()->getQuery());
 
         $totalPages = ceil($totalCount / $limit);
+        $totalPages = ($totalPages <= 0 ? 1 : $totalPages);
+
         $page = ($page > $totalPages ? $totalPages : $page);
 
         $queryOffset = (($page * $limit) - $limit);
