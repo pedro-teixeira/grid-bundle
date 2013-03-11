@@ -147,11 +147,11 @@ Create your grid
      	 */
 	    public function indexAction()
     	{
-    		/* @var \Doctrine\ORM\EntityRepository $repository */
+    		/** @var \Doctrine\ORM\EntityRepository $repository */
         	$repository = $this->getDoctrine()->getRepository('PedroTeixeiraTestBundle:TestEntity');
 	        $queryBuilder = $repository->createQueryBuilder('r');
 
-	        /** @var $grid \PedroTeixeira\Bundle\TestBundle\Grid\TestGrid */
+	        /** @var \PedroTeixeira\Bundle\TestBundle\Grid\TestGrid $grid */
     	    $grid = $this->get('pedroteixeira.grid')->createGrid('\PedroTeixeira\Bundle\TestBundle\Grid\TestGrid');
         	$grid->setQueryBuilder($queryBuilder);
 
