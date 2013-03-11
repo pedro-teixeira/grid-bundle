@@ -19,12 +19,11 @@ Installation
 1. **Add as a dependency in your composer file**
 
 	```json
-    // composer.json
-	"require":{
+	"require": {
         "pedro-teixeira/grid-bundle":"dev-master"
     }
     ```
-    
+
 2. **Add to your Kernel**
 
 	```php
@@ -36,7 +35,7 @@ Installation
         );
  	}
     ```
-    
+
 3. **Add to your assetics configuration**
 
 	```yml
@@ -54,14 +53,14 @@ Installation
 	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
 	{% endstylesheets %}
 	```
-	
+
 	```twig
 	{% javascripts
         '@PedroTeixeiraGridBundle/Resources/public/js/grid.js'
 	%}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-	```	
+	```
 
 
 Create your grid
@@ -83,7 +82,7 @@ Create your grid
 	 */
 	class TestGrid extends GridAbstract
 	{
-	
+
     	/**
      	* {@inheritdoc}
      	*/
@@ -121,7 +120,7 @@ Create your grid
 		}
 	}
     ```
-    
+
 2. **Use the grid factory in your controller**
 
 	```php
@@ -167,13 +166,13 @@ Create your grid
     	}
 	}
 	```
-	
+
 3. **Render in your template**
 
     ```twig
     {{ pedroteixeira_grid(grid) }}
     ````
-    
+
 Understanding
 ------------
 
