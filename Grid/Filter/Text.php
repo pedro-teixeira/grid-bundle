@@ -17,7 +17,7 @@ class Text extends FilterAbstract
      */
     public function render()
     {
-        $html = '<input ' . $this->getNameAndId() . ' type="' . $this->getInputType() . '" value="' . $this->getValue() . '">';
+        $html = '<input ' . $this->getNameAndId() . ' type="' . $this->getInputType() . '" value="' . $this->getValue() . '" placeholder="' . $this->getPlaceholder() . '">';
 
         return $html;
     }

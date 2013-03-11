@@ -6,7 +6,7 @@
                 <thead>
                     <tr id="row-filters-label">
                         {% for column in view.grid.columns %}
-                            <th id="{{ column.field }}" data-index="{{ column.index }}">{{ column.name }}</th>
+                            <th id="{{ column.field }}" {% if column.sortable %}data-index="{{ column.index }}"{% endif %}>{{ column.name }}</th>
                         {% endfor %}
                     </tr>
                     <tr class="row-filters">

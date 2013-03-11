@@ -149,7 +149,7 @@
             var element = $(event.target)
                 sortIndex = element.data('index')
 
-            if (sortIndex == '') {
+            if (!sortIndex) {
                 return false
             }
 
