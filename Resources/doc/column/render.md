@@ -14,8 +14,8 @@ Usage:
 ```php
 public function setupGrid()
 {
-	$this->addColumn()
-		->setRenderType('text');
+    $this->addColumn()
+        ->setRenderType('text');
 }
 ```
 

@@ -14,8 +14,8 @@ Usage:
 ```php
 public function setupGrid()
 {
-	$this->addColumn()
-		->setFilterType('text');
+    $this->addColumn()
+        ->setFilterType('text');
 }
 ```
 
@@ -37,7 +37,7 @@ Operator:
 ```php
 public function setupGrid()
 {
-	$this->addColumn('ID')
+    $this->addColumn('ID')
         ->getFilter()
             ->getOperator()
                 ->setComparisonType('equal');

@@ -13,7 +13,7 @@ Usage:
 ```php
 public function setupGrid()
 {
-	$this->addColumn('Column Name');
+    $this->addColumn('Column Name');
 }
 ```
 
@@ -27,8 +27,8 @@ Usage:
 ```php
 public function setupGrid()
 {
-	$this->addColumn()
-		->setField('test');
+    $this->addColumn()
+        ->setField('test');
 }
 ```
 
@@ -42,8 +42,8 @@ Usage:
 ```php
 public function setupGrid()
 {
-	$this->addColumn()
-		->setIndex('r.test');
+    $this->addColumn()
+        ->setIndex('r.test');
 }
 ```
 
@@ -57,8 +57,8 @@ Usage:
 ```php
 public function setupGrid()
 {
-	$this->addColumn()
-		->setTwig('TestBundle:Test:template.html.twig')
+    $this->addColumn()
+        ->setTwig('TestBundle:Test:template.html.twig')
         ->setFilterType(false);
 }
 ```
@@ -79,8 +79,8 @@ Usage:
 ```php
 public function setupGrid()
 {
-	$this->addColumn()
-		->setSortable(false);
+    $this->addColumn()
+        ->setSortable(false);
 }
 ```
 

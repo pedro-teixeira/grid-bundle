@@ -18,49 +18,49 @@ Installation
 
 1. **Add as a dependency in your composer file**
 
-	```json
-	"require": {
+    ```json
+    "require": {
         "pedro-teixeira/grid-bundle":"dev-master"
     }
     ```
 
 2. **Add to your Kernel**
 
-	```php
+    ```php
     // application/ApplicationKernel.php
     public function registerBundles()
     {
         $bundles = array(
-        	new PedroTeixeira\Bundle\GridBundle\PedroTeixeiraGridBundle()
+            new PedroTeixeira\Bundle\GridBundle\PedroTeixeiraGridBundle()
         );
- 	}
+     }
     ```
 
 3. **Add to your assetics configuration**
 
-	```yml
+    ```yml
     // application/config/config.yml
     assetic:
-    	bundles: [ PedroTeixeiraGridBundle ]
+        bundles: [ PedroTeixeiraGridBundle ]
     ```
 
 4. **Add assets to your layout**
 
-	```twig
-	{% stylesheets
-		'@PedroTeixeiraGridBundle/Resources/public/css/grid.css'
-	%}
-	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-	{% endstylesheets %}
-	```
+    ```twig
+    {% stylesheets
+        '@PedroTeixeiraGridBundle/Resources/public/css/grid.css'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+    ```
 
-	```twig
-	{% javascripts
+    ```twig
+    {% javascripts
         '@PedroTeixeiraGridBundle/Resources/public/js/grid.js'
-	%}
+    %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-	```
+    ```
 
 
 Create your grid
@@ -73,98 +73,98 @@ Create your grid
     ```php
     <?php
 
-	namespace PedroTeixeira\Bundle\TestBundle\Grid;
+    namespace PedroTeixeira\Bundle\TestBundle\Grid;
 
-	use PedroTeixeira\Bundle\GridBundle\Grid\GridAbstract;
+    use PedroTeixeira\Bundle\GridBundle\Grid\GridAbstract;
 
-	/**
-	 * Test Grid
-	 */
-	class TestGrid extends GridAbstract
-	{
-    	/**
-     	* {@inheritdoc}
-     	*/
-    	public function setupGrid()
-    	{
-        	$this->addColumn('ID')
-            	->setField('id')
-            	->setIndex('r.id')
-            	->getFilter()
-                	->getOperator()
-                    	->setComparisonType('equal');
+    /**
+     * Test Grid
+     */
+    class TestGrid extends GridAbstract
+    {
+        /**
+         * {@inheritdoc}
+         */
+        public function setupGrid()
+        {
+            $this->addColumn('ID')
+                ->setField('id')
+                ->setIndex('r.id')
+                ->getFilter()
+                    ->getOperator()
+                        ->setComparisonType('equal');
 
-	        $this->addColumn('Created At')
-    	        ->setField('createdAt')
-        	    ->setIndex('r.createdAt')
-            	->setFilterType('date_range')
-	            ->setRenderType('date');
+            $this->addColumn('Created At')
+                ->setField('createdAt')
+                ->setIndex('r.createdAt')
+                ->setFilterType('date_range')
+                ->setRenderType('date');
 
-    	    $this->addColumn('Name')
-        	    ->setField('name')
-            	->setIndex('r.name');
+            $this->addColumn('Name')
+                ->setField('name')
+                ->setIndex('r.name');
 
-	        $this->addColumn('Options')
-    	        ->setField('option')
-        	    ->setIndex('r.options')
-            	->setFilterType('select')
-	            ->getFilter()
-    	            ->setOptions(array(
-    	            	'key' => 'value'
-    	            ));
+            $this->addColumn('Options')
+                ->setField('option')
+                ->setIndex('r.options')
+                ->setFilterType('select')
+                ->getFilter()
+                    ->setOptions(array(
+                        'key' => 'value'
+                    ));
 
-	        $this->addColumn('Action')
-    	        ->setTwig('PedroTeixeiraTestBundle:Test:gridAction.html.twig')
-        	    ->setFilterType(false);
-		}
-	}
+            $this->addColumn('Action')
+                ->setTwig('PedroTeixeiraTestBundle:Test:gridAction.html.twig')
+                ->setFilterType(false);
+        }
+    }
     ```
 
 2. **Use the grid factory in your controller**
 
-	```php
-	<?php
+    ```php
+    <?php
 
-	namespace PedroTeixeira\Bundle\TestBundle\Controller;
+    namespace PedroTeixeira\Bundle\TestBundle\Controller;
 
-	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-	use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-	use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-	use JMS\SecurityExtraBundle\Annotation\Secure;
+    use JMS\SecurityExtraBundle\Annotation\Secure;
 
-	/**
-	 * Default controller
-	 */
-	class DefaultController extends Controller
-	{
-		/**
-		 * @Route("/", name="test")
-     	 * @Template()
-     	 *
-     	 * @return array
-     	 */
-	    public function indexAction()
-    	{
-    		/** @var \Doctrine\ORM\EntityRepository $repository */
-        	$repository = $this->getDoctrine()->getRepository('PedroTeixeiraTestBundle:TestEntity');
-	        $queryBuilder = $repository->createQueryBuilder('r');
+    /**
+     * Default controller
+     */
+    class DefaultController extends Controller
+    {
+        /**
+         * @Route("/", name="test")
+          * @Template()
+          *
+          * @return array
+          */
+        public function indexAction()
+        {
+            /** @var \Doctrine\ORM\EntityRepository $repository */
+            $repository = $this->getDoctrine()->getRepository('PedroTeixeiraTestBundle:TestEntity');
+            $queryBuilder = $repository->createQueryBuilder('r');
 
-	        /** @var \PedroTeixeira\Bundle\TestBundle\Grid\TestGrid $grid */
-    	    $grid = $this->get('pedroteixeira.grid')->createGrid('\PedroTeixeira\Bundle\TestBundle\Grid\TestGrid');
-        	$grid->setQueryBuilder($queryBuilder);
+            /** @var \PedroTeixeira\Bundle\TestBundle\Grid\TestGrid $grid */
+            $grid = $this->get('pedroteixeira.grid')->createGrid('\PedroTeixeira\Bundle\TestBundle\Grid\TestGrid');
+            $grid->setQueryBuilder($queryBuilder);
 
-        	if ($grid->isAjax()) {
-            	return $grid->render();
-        	}
+            if ($grid->isAjax()) {
+                return $grid->render();
+            }
 
-        	return array(
-            	'grid'   => $grid->render()
-        	);
-    	}
-	}
-	```
+            return array(
+                'grid'   => $grid->render()
+            );
+        }
+    }
+    ```
 
 3. **Render in your template**
 
@@ -177,5 +177,5 @@ Understanding
 
 * [Grid](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/grid.md)
 * [Column](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column.md)
- 	* [Render](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/render.md)
- 	* [Filter](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/filter.md)
+     * [Render](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/render.md)
+     * [Filter](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/filter.md)
