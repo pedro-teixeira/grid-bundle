@@ -1,0 +1,82 @@
+{# GRID HTML #}
+{% block grid_html %}
+    <div class="pedroteixeira-grid-wrapper" id="{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper">
+        <form id="{{ view.grid.name | raw }}-pedroteixeira-grid-form">
+            <table class="table table-hover table-bordered pedroteixeira-grid-table" id="{{ view.grid.name | raw }}-pedroteixeira-grid-table">
+                <thead>
+                    <tr id="row-filters-label">
+                        {% for column in view.grid.columns %}
+                            <th id="{{ column.field }}" {% if column.sortable %}data-index="{{ column.index }}"{% endif %}>{{ column.name }}</th>
+                        {% endfor %}
+                    </tr>
+                    <tr class="row-filters">
+                        {% for column in view.grid.columns %}
+                            <th>{{ column.renderFilter | raw }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody class="table-condensed row-result"></tbody>
+                <tbody class="row-empty">
+                    <tr>
+                        <td colspan="{{ view.grid.getColumnsCount }}">{% trans %}There is no rows.{% endtrans %}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="row-footer">
+                        <td colspan="{{ view.grid.getColumnsCount }}">
+                            {# Without submit button the form is not submitted with the enter key #}
+                            <button id="refresh-button" class="btn btn-mini" type="submit">
+                                <i class="icon-refresh"></i> {% trans %}Update{% endtrans %}
+                            </button>
+
+                            <button id="refresh-filters-button" class="btn btn-mini" type="button">
+                                <i class="icon-filter"></i> {% trans %}Refresh Filters{% endtrans %}
+                            </button>
+
+                            {# @todo Implement #}
+                            {#<button id="export-button" class="btn btn-mini" type="button">#}
+                                {#<i class="icon-download"></i> {% trans %}Export{% endtrans %}#}
+                            {#</button>#}
+
+                            <div id="pagination" class="pull-right">
+                                <button id="pagination-back-button" class="btn btn-mini" type="button">
+                                    <i class="icon-chevron-left"></i>
+                                </button>
+                                <input id="pagination-page" type="text" value="0">
+                                <button id="pagination-forward-button" class="btn btn-mini" type="button">
+                                    <i class="icon-chevron-right"></i>
+                                </button>
+
+                                {% trans %}of{% endtrans %}
+                                <span id="pagination-total-pages">0</span>
+                                {% trans %}page(s) with{% endtrans %}
+                                <span id="pagination-total">0</span>
+                                {% trans %}result(s){% endtrans %}.
+                                {% trans %}Showing{% endtrans %}
+                                <input id="pagination-limit" type="text" value="0">
+                                {% trans %}result(s) per page{% endtrans %}.
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+{% endblock %}
+
+{# GRID JS #}
+{% block grid_js %}
+    <script type="text/javascript">
+        $(function () {
+            $('#{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper').grid({
+                ajaxUrl: '{{ view.grid.url }}'
+            })
+        });
+    </script>
+{% endblock %}
+
+{# GRID #}
+{% block grid %}
+    {{ block("grid_html") }}
+    {{ block("grid_js") }}
+{% endblock %}

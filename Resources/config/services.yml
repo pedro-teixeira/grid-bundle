@@ -1,0 +1,11 @@
+services:
+
+    pedroteixeira.grid:
+        class: PedroTeixeira\Bundle\GridBundle\Grid\Factory
+        arguments: [ '@service_container' ]
+
+    pedroteixeira.twig.grid:
+        class: PedroTeixeira\Bundle\GridBundle\Twig\GridExtension
+        arguments: [ '@service_container' ]
+        tags:
+            - { name: twig.extension }
