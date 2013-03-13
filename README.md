@@ -9,8 +9,9 @@ Requirements
 
 1. [Doctrine Extensions](https://github.com/beberlei/DoctrineExtensions)
 2. [Twitter Bootstrap](http://twitter.github.com/bootstrap/) (not mandatory)
-
-If you choose to don't use Twitter Bootstrap, it'll be necessary to create your own style.
+	* If you choose to don't use Twitter Bootstrap, it'll be necessary to create your own style.
+3. [jQuery Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) (not mandatory)
+	* If you choose to don't use Bootstrap Datepicker, please disable the datepicker as default in the configuration, "use_datepicker".
 
 
 Installation
