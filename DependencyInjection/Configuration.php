@@ -18,11 +18,38 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pedroteixeira_grid');
+        $rootNode = $treeBuilder->root('pedro_teixeira_grid');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('defaults')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('date')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('use_datepicker')
+                                    ->defaultValue(true)
+                                ->end()
+                                ->scalarNode('date_format')
+                                    ->defaultValue('dd/MM/yy')
+                                ->end()
+                                ->scalarNode('date_time_format')
+                                    ->defaultValue('dd/MM/yy HH:mm:ss')
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('pagination')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('limit')
+                                    ->defaultValue(20)
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

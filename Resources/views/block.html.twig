@@ -69,7 +69,8 @@
     <script type="text/javascript">
         $(function () {
             $('#{{ view.grid.name | raw }}-pedroteixeira-grid-wrapper').grid({
-                ajaxUrl: '{{ view.grid.url }}'
+                ajaxUrl: '{{ view.grid.url }}',
+                limit: {{ view.getPaginationLimit }}
             })
         });
     </script>

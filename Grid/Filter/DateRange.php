@@ -15,32 +15,38 @@ class DateRange extends Date
     /**
      * @var string
      */
-    protected $fromLabel = 'From';
-
-    /**
-     * @var string
-     */
-    protected $toLabel = 'To';
+    protected $inputSeparator = ' : ';
 
     /**
      * @return string
      */
     public function render()
     {
-        $html  = '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="' . $this->getInputType() . '" value="' . $this->getValue() . '"> ';
-        $html .= '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="' . $this->getInputType() . '" value="' . $this->getValue() . '">';
+        if ($this->getUseDatePicker()) {
+
+            $html  = '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="text" value="' . $this->getValue() . '" placeholder="' . $this->getPlaceholder() . '" data-date-format="' . strtolower($this->container->getParameter('pedro_teixeira_grid.date.date_format')) . '">';
+            $html .= $this->getInputSeparator();
+            $html .= '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="text" value="' . $this->getValue() . '" placeholder="' . $this->getPlaceholder() . '" data-date-format="' . strtolower($this->container->getParameter('pedro_teixeira_grid.date.date_format')) . '">';
+            $html .= '<script type="text/javascript">$(document).ready(function () {$("#' . $this->getId() . 'from").datepicker(); $("#' . $this->getId() . 'to").datepicker()})</script>';
+
+        } else {
+
+            $html  = '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="date" value="' . $this->getValue() . '"> ';
+            $html .= '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="date" value="' . $this->getValue() . '">';
+
+        }
 
         return $html;
     }
 
     /**
-     * @param string $fromLabel
+     * @param string $inputSeparator
      *
      * @return DateRange
      */
-    public function setFromLabel($fromLabel)
+    public function setInputSeparator($inputSeparator)
     {
-        $this->fromLabel = $fromLabel;
+        $this->inputSeparator = $inputSeparator;
 
         return $this;
     }
@@ -48,28 +54,8 @@ class DateRange extends Date
     /**
      * @return string
      */
-    public function getFromLabel()
+    public function getInputSeparator()
     {
-        return $this->translate($this->fromLabel);
-    }
-
-    /**
-     * @param string $toLabel
-     *
-     * @return DateRange
-     */
-    public function setToLabel($toLabel)
-    {
-        $this->toLabel = $toLabel;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getToLabel()
-    {
-        return $this->translate($this->toLabel);
+        return $this->inputSeparator;
     }
 }

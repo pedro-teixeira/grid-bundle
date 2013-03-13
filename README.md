@@ -39,7 +39,7 @@ Installation
 3. **Add to your assetics configuration**
 
     ```yml
-    // application/config/config.yml
+    # application/config/config.yml
     assetic:
         bundles: [ PedroTeixeiraGridBundle ]
     ```
@@ -61,6 +61,22 @@ Installation
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
     ```
+
+5. **(optional) Adjust configurations**
+
+	```yml
+	# application/config/config.yml
+	pedro_teixeira_grid:
+    	defaults:
+        	date:
+            	use_datepicker:   true
+	            date_format:      'dd/MM/yy'
+    	        date_time_format: 'dd/MM/yy HH:mm:ss'
+        	pagination:
+            	limit:            20
+	```
+	
+	The configuration "use_datepicker" will set the input type as "text" and attach a jQuery plugin "datepicker()" to the filter.
 
 
 Create your grid

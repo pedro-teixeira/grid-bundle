@@ -206,8 +206,10 @@ abstract class GridAbstract
      */
     public function getData()
     {
+        $defaultLimit = $this->container->getParameter('pedro_teixeira_grid.pagination.limit');
+
         $page       = $this->request->query->get('page', 1);
-        $limit      = $this->request->query->get('limit', 20);
+        $limit      = $this->request->query->get('limit', $defaultLimit);
         $sortIndex  = $this->request->query->get('sort');
         $sortOrder  = $this->request->query->get('sort_order');
         $filters    = $this->request->query->get('filters', array());
@@ -216,7 +218,7 @@ abstract class GridAbstract
         $page = ($page <= 0 ? 1 : $page);
 
         $limit = intval(abs($limit));
-        $limit = ($limit <= 0 ? 20 : $limit);
+        $limit = ($limit <= 0 ? $defaultLimit : $limit);
 
         /** @todo Remove the unnecessary iterations */
 
@@ -341,7 +343,7 @@ abstract class GridAbstract
 
             return $response;
         } else {
-            return new GridView($this);
+            return new GridView($this, $this->container);
         }
     }
 }
