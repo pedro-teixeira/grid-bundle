@@ -15,13 +15,18 @@ class GridView
     protected $grid;
 
     /**
-     * Constructor
-     *
-     * @param GridAbstract $grid
+     * @var \Symfony\Component\DependencyInjection\Container
      */
-    public function __construct(GridAbstract $grid)
+    protected $container;
+
+    /**
+     * @param GridAbstract                                     $grid
+     * @param \Symfony\Component\DependencyInjection\Container $container
+     */
+    public function __construct(GridAbstract $grid, \Symfony\Component\DependencyInjection\Container $container)
     {
         $this->grid = $grid;
+        $this->container = $container;
     }
 
     /**
@@ -30,5 +35,13 @@ class GridView
     public function getGrid()
     {
         return $this->grid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaginationLimit()
+    {
+        return $this->container->getParameter('pedro_teixeira_grid.pagination.limit');
     }
 }

@@ -24,5 +24,23 @@ class PedroTeixeiraGridExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        foreach ($config['defaults'] as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $secondKey => $secondValue) {
+                    $container->setParameter($this->getAlias() . '.' . $key . '.' . $secondKey, $secondValue);
+                }
+            } else {
+                $container->setParameter($this->getAlias() . '.' . $key, $value);
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return 'pedro_teixeira_grid';
     }
 }

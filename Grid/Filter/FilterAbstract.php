@@ -110,7 +110,11 @@ abstract class FilterAbstract
      */
     public function getId()
     {
-        return (is_null($this->id) ? uniqid() : $this->id);
+        if (is_null($this->id)) {
+            $this->id = uniqid();
+        }
+
+        return $this->id;
     }
 
     /**

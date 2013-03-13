@@ -8,11 +8,11 @@
         this.$element = $(element)
         this.options = $.extend({}, $.fn.grid.defaults, options)
         this.ajaxUrl = this.options.ajaxUrl || this.ajaxUrl
+        this.limit = this.options.limit || this.limit
         this.exportFlag = false
         this.sortIndex = ''
         this.sortOrder = 'ASC'
         this.page = 1
-        this.limit = 20
         this.totalRows = 0
         this.totalPages = 0
         this.listen()
@@ -114,8 +114,13 @@
         }
 
         , refreshFilters:function () {
+
             $.each(this.$element.find('form'), function (i, form) {
                 form.reset()
+            })
+
+            $.each(this.$element.find('.date-input'), function (i, input) {
+                $(input).removeAttr('value')
             })
 
             this.ajax()
@@ -242,7 +247,8 @@
     }
 
     $.fn.grid.defaults = {
-        ajaxUrl:false
+        ajaxUrl:false,
+        limit:20
     }
 
     $.fn.grid.Constructor = Grid

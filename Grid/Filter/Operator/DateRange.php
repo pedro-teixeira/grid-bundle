@@ -2,6 +2,8 @@
 
 namespace PedroTeixeira\Bundle\GridBundle\Grid\Filter\Operator;
 
+use Symfony\Component\Locale\Stub\DateFormat\FullTransformer;
+
 /**
  * DateRange
  */
@@ -21,6 +23,14 @@ class DateRange extends OperatorAbstract
         $queryBuilder = $this->getQueryBuilder();
 
         if (!empty($value[0])) {
+
+            $transformer = new FullTransformer(
+                $this->container->getParameter('pedro_teixeira_grid.date.date_format'),
+                $this->container->getParameter('locale')
+            );
+            $date = new \DateTime();
+            $transformer->parse($date, $value[0]);
+
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->gte(
                     $this->getIndex(),
@@ -28,11 +38,19 @@ class DateRange extends OperatorAbstract
                 ))
                 ->setParameter(
                     ":{$this->getIndexClean()}_1",
-                    $value[0] . ' 00:00:00'
+                    $date->format('Y-m-d') . ' 00:00:00'
                 );
         }
 
         if (!empty($value[1])) {
+
+            $transformer = new FullTransformer(
+                $this->container->getParameter('pedro_teixeira_grid.date.date_format'),
+                $this->container->getParameter('locale')
+            );
+            $date = new \DateTime();
+            $transformer->parse($date, $value[1]);
+
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->lte(
                     $this->getIndex(),
@@ -40,7 +58,7 @@ class DateRange extends OperatorAbstract
                 ))
                 ->setParameter(
                     ":{$this->getIndexClean()}_2",
-                    $value[1] . ' 23:59:59'
+                    $date->format('Y-m-d') . ' 23:59:59'
                 );
         }
     }

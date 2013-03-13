@@ -75,8 +75,7 @@ Two fields to define a date range.
 
 Attributes:
 
-* fromLabel
-* toLabel
+* inputSeparator
 
 select
 ------------

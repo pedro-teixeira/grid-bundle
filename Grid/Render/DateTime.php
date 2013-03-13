@@ -2,13 +2,26 @@
 
 namespace PedroTeixeira\Bundle\GridBundle\Grid\Render;
 
+use Symfony\Component\Locale\Stub\DateFormat\FullTransformer;
+
 /**
  * Render Date
  */
-class DateTime extends Date
+class DateTime extends RenderAbstract
 {
     /**
-     * @var string
+     * @return string
      */
-    protected $dateFormat = 'Y-m-d H:i:s';
+    public function render()
+    {
+        if ($this->getValue() instanceof \DateTime) {
+
+            $transformer = new FullTransformer(
+                $this->container->getParameter('pedro_teixeira_grid.date_time_format'),
+                $this->container->getParameter('locale')
+            );
+
+            return $transformer->format($this->getValue());
+        }
+    }
 }

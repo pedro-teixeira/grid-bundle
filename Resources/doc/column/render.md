@@ -25,3 +25,5 @@ Render Types
 * text
 * date
 * date_time
+* url
+* yes_no
