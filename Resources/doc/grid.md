@@ -24,6 +24,22 @@ Usage:
 $grid->setName('My Grid');
 ```
 
+protected $exportable
+------------
+Enable export in the grid.
+
+Default:
+
+```
+true
+```
+
+Usage:
+
+```php
+$grid->setExportable(false);
+```
+
 abstract public function setupGrid()
 ------------
 Use this method to define your grid.

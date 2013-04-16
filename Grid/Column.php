@@ -48,6 +48,11 @@ class Column
     protected $renderType = 'text';
 
     /**
+     * @var bool
+     */
+    protected $exportOnly = false;
+
+    /**
      * @var \PedroTeixeira\Bundle\GridBundle\Grid\Render\RenderAbstract
      */
     protected $render;
@@ -264,6 +269,26 @@ class Column
     public function getRenderType()
     {
         return $this->renderType;
+    }
+
+    /**
+     * @param boolean $exportOnly
+     *
+     * @return Column
+     */
+    public function setExportOnly($exportOnly)
+    {
+        $this->exportOnly = $exportOnly;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getExportOnly()
+    {
+        return $this->exportOnly;
     }
 
     /**

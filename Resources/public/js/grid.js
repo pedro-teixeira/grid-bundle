@@ -41,15 +41,21 @@
                     'limit':this.limit,
                     'sort': this.sortIndex,
                     'sort_order': this.sortOrder,
-                    'export': this.exportFlag,
+                    'export': (this.exportFlag ? 1 : 0),
                     'filters': filters
                 },
                 dataType:'json',
+                timeout: (this.exportFlag ? (5*60*1000) : (10 * 1000)),
                 beforeSend:function (data) {
                     thisClass.gridLock()
                 },
                 success:function (data) {
                     thisClass.gridUnlock()
+
+                    if (data.file_hash) {
+                        window.location = thisClass.ajaxUrl + '?export=1&file_hash=' + data.file_hash
+                        return
+                    }
 
                     thisClass.page = data.page
                     thisClass.limit = data.page_limit
@@ -131,6 +137,7 @@
         , export:function () {
             this.exportFlag = true
             this.ajax()
+            this.exportFlag = false
 
             return this
         }
