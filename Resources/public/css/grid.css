@@ -30,7 +30,11 @@
 }
 
 .pedroteixeira-grid-wrapper table thead tr th .date-input {
-    width: 70px;
+    width: 75px;
+}
+
+.pedroteixeira-grid-wrapper table thead tr th .number-input {
+    width: 75px;
 }
 
 .pedroteixeira-grid-wrapper table tfoot #pagination {

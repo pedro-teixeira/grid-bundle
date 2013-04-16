@@ -24,15 +24,16 @@ class DateRange extends Date
     {
         if ($this->getUseDatePicker()) {
 
-            $html  = '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="text" value="' . $this->getValue() . '" placeholder="' . $this->getPlaceholder() . '" data-date-format="' . strtolower($this->container->getParameter('pedro_teixeira_grid.date.date_format')) . '">';
+            $html  = '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="text" value="' . $this->getValue() . '" placeholder="' . $this->getPlaceholder() . '" data-date-format="' . strtolower($this->dateFormat) . '">';
             $html .= $this->getInputSeparator();
-            $html .= '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="text" value="' . $this->getValue() . '" placeholder="' . $this->getPlaceholder() . '" data-date-format="' . strtolower($this->container->getParameter('pedro_teixeira_grid.date.date_format')) . '">';
+            $html .= '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="text" value="' . $this->getValue() . '" placeholder="' . $this->getPlaceholder() . '" data-date-format="' . strtolower($this->dateFormat) . '">';
             $html .= '<script type="text/javascript">$(document).ready(function () {$("#' . $this->getId() . 'from").datepicker(); $("#' . $this->getId() . 'to").datepicker()})</script>';
 
         } else {
 
-            $html  = '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="date" value="' . $this->getValue() . '"> ';
-            $html .= '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="date" value="' . $this->getValue() . '">';
+            $html  = '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="date" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '"> ';
+            $html .= $this->getInputSeparator();
+            $html .= '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="date" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '">';
 
         }
 
