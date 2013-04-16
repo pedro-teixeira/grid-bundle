@@ -62,6 +62,7 @@ Operator Comparison Types:
 * end_with
 * not_end_with
 * not_contain
+* number_range
 
 date
 ------------
@@ -72,6 +73,15 @@ date_range
 ------------
 
 Two fields to define a date range.
+
+Attributes:
+
+* inputSeparator
+
+number_range
+------------
+
+Two fields to define a number range.
 
 Attributes:
 

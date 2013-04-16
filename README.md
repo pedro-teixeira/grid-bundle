@@ -129,6 +129,11 @@ Create your grid
                 ->setField('name')
                 ->setIndex('r.name');
 
+            $this->addColumn('Number')
+                ->setField('number')
+                ->setIndex('r.number')
+                ->setFilterType('number_range');
+
             $this->addColumn('Options')
                 ->setField('option')
                 ->setIndex('r.options')

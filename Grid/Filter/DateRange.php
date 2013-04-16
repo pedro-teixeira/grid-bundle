@@ -31,8 +31,9 @@ class DateRange extends Date
 
         } else {
 
-            $html  = '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="date" value="' . $this->getValue() . '"> ';
-            $html .= '<input name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="date" value="' . $this->getValue() . '">';
+            $html  = '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="date" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '"> ';
+            $html .= $this->getInputSeparator();
+            $html .= '<input class="date-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="date" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '">';
 
         }
 

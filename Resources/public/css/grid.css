@@ -33,6 +33,10 @@
     width: 75px;
 }
 
+.pedroteixeira-grid-wrapper table thead tr th .number-input {
+    width: 75px;
+}
+
 .pedroteixeira-grid-wrapper table tfoot #pagination {
     font-size: 0.8em;
 }
