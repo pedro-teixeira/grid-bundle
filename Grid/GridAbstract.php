@@ -55,6 +55,21 @@ abstract class GridAbstract
     protected $ajax;
 
     /**
+     * @var bool
+     */
+    protected $exportable;
+
+    /**
+     * @var bool
+     */
+    protected $export;
+
+    /**
+     * @var string
+     */
+    protected $fileHash;
+
+    /**
      * @var string
      */
     protected $name;
@@ -79,7 +94,15 @@ abstract class GridAbstract
 
         $this->columns = array();
         $this->url = null;
+
         $this->ajax = $this->request->isXmlHttpRequest() ? true : false;
+
+        $this->exportable = $this->container->getParameter('pedro_teixeira_grid.export.enabled');
+        $this->export = $this->request->query->get('export', false);
+        $this->fileHash = $this->request->query->get('file_hash', null);
+        if (is_null($this->fileHash)) {
+            $this->fileHash = uniqid();
+        }
 
         $now = new \DateTime();
         $this->name = md5($now->format('Y-m-d H:i:s:u'));
@@ -99,6 +122,22 @@ abstract class GridAbstract
     public function isAjax()
     {
         return $this->ajax;
+    }
+
+    /**
+     * @return bool Check if it's an export call
+     */
+    public function isExport()
+    {
+        return $this->export;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isResponseAnswer()
+    {
+        return ($this->isAjax() || $this->isExport());
     }
 
     /**
@@ -143,6 +182,26 @@ abstract class GridAbstract
         }
 
         return $this->url;
+    }
+
+    /**
+     * @param boolean $exportable
+     *
+     * @return GridAbstract
+     */
+    public function setExportable($exportable)
+    {
+        $this->exportable = $exportable;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getExportable()
+    {
+        return $this->exportable;
     }
 
     /**
@@ -200,6 +259,17 @@ abstract class GridAbstract
     }
 
     /**
+     * @return string
+     */
+    protected function getExportFileName()
+    {
+        $exportPath = $this->container->getParameter('pedro_teixeira_grid.export.path');
+        $exportFile = $exportPath . $this->getName() . '_' . $this->fileHash . '.csv';
+
+        return $exportFile;
+    }
+
+    /**
      * Process the filters and return the result
      *
      * @return array
@@ -253,26 +323,33 @@ abstract class GridAbstract
             $this->getQueryBuilder()->orderBy($sortIndex, $sortOrder);
         }
 
-        $totalCount = Paginate::count($this->getQueryBuilder()->getQuery());
+        // Don't process grid for export
+        if (!$this->isExport()) {
+            $totalCount = Paginate::count($this->getQueryBuilder()->getQuery());
 
-        $totalPages = ceil($totalCount / $limit);
-        $totalPages = ($totalPages <= 0 ? 1 : $totalPages);
+            $totalPages = ceil($totalCount / $limit);
+            $totalPages = ($totalPages <= 0 ? 1 : $totalPages);
 
-        $page = ($page > $totalPages ? $totalPages : $page);
+            $page = ($page > $totalPages ? $totalPages : $page);
 
-        $queryOffset = (($page * $limit) - $limit);
+            $queryOffset = (($page * $limit) - $limit);
 
-        $this->getQueryBuilder()
-            ->setFirstResult($queryOffset)
-            ->setMaxResults($limit);
+            $this->getQueryBuilder()
+                ->setFirstResult($queryOffset)
+                ->setMaxResults($limit);
 
-        $response = array(
-            'page'          => $page,
-            'page_count'    => $totalPages,
-            'page_limit'    => $limit,
-            'row_count'     => $totalCount,
-            'rows'          => array()
-        );
+            $response = array(
+                'page'       => $page,
+                'page_count' => $totalPages,
+                'page_limit' => $limit,
+                'row_count'  => $totalCount,
+                'rows'       => array()
+            );
+        } else {
+            $response = array(
+                'rows'       => array()
+            );
+        }
 
         foreach ($this->getQueryBuilder()->getQuery()->getResult() as $key => $row) {
 
@@ -280,6 +357,10 @@ abstract class GridAbstract
 
             /** @var Column $column */
             foreach ($this->columns as $column) {
+
+                if ($column->getExportOnly() && !$this->isExport()) {
+                    continue;
+                }
 
                 $rowColumn = ' ';
 
@@ -316,7 +397,10 @@ abstract class GridAbstract
                     );
                 }
 
-                $rowValue[$column->getField()] = $column->getRender()->setValue($rowColumn)->render();
+                $rowValue[$column->getField()] = $column->getRender()
+                    ->setValue($rowColumn)
+                    ->setStringOnly($this->isExport())
+                    ->render();
             }
 
             $response['rows'][$key] = $rowValue;
@@ -326,24 +410,102 @@ abstract class GridAbstract
     }
 
     /**
+     * @return array
+     */
+    public function processGrid()
+    {
+        return $this->getData();
+    }
+
+    /**
+     * @return array
+     */
+    public function processExport()
+    {
+        set_time_limit(0);
+
+        $exportFile = $this->getExportFileName();
+
+        $fileHandler = fopen($exportFile, 'w');
+
+        $columnsHeader = array();
+
+        /** @var Column $column */
+        foreach ($this->getColumns() as $column) {
+            if (!$column->getTwig()) {
+                $columnsHeader[$column->getField()] = $column->getName();
+            }
+        }
+
+        fputcsv($fileHandler, $columnsHeader);
+
+        $data = $this->getData();
+
+        foreach ($data['rows'] as $row) {
+
+            $rowContent = array();
+
+            foreach ($row as $key => $column) {
+                if (isset($columnsHeader[$key])) {
+                    $rowContent[] = $column;
+                }
+            }
+
+            fputcsv($fileHandler, $rowContent);
+        }
+
+        fclose($fileHandler);
+
+        return array(
+            'file_hash' => $this->fileHash
+        );
+    }
+
+    /**
      * Returns the an array with a GridView instance for normal requests and json for AJAX requests
      *
+     * @throws \Exception
      * @return GridView | \Symfony\Component\HttpFoundation\Response
      */
     public function render()
     {
         if ($this->isAjax()) {
+            if ($this->isExport()) {
 
-            $data = $this->getData();
+                if (!$this->getExportable()) {
+                    throw new \Exception('Export not allowed');
+                }
+
+                $data = $this->processExport();
+            } else {
+                $data = $this->processGrid();
+            }
+
             $json = json_encode($data);
 
             $response = new Response();
-            $response->setContent($json);
             $response->headers->set('Content-Type', 'application/json');
+            $response->setContent($json);
 
             return $response;
         } else {
-            return new GridView($this, $this->container);
+            if ($this->isExport()) {
+
+                if (!$this->getExportable()) {
+                    throw new \Exception('Export not allowed');
+                }
+
+                $exportFile = $this->getExportFileName();
+
+                $response = new Response();
+                $response->headers->set('Content-Type', 'text/csv');
+                $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($exportFile) . '"');
+                $response->setContent(file_get_contents($exportFile));
+
+                return $response;
+            } else {
+                return new GridView($this, $this->container);
+            }
         }
     }
 }

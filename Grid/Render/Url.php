@@ -12,6 +12,10 @@ class Url extends RenderAbstract
      */
     public function render()
     {
-        return '<a href="' . $this->getValue() . '" target="_blank">' . $this->getValue() . '</a>';
+        if ($this->getStringOnly()) {
+            return $this->getValue();
+        } else {
+            return '<a href="' . $this->getValue() . '" target="_blank">' . $this->getValue() . '</a>';
+        }
     }
 }

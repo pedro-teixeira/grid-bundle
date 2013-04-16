@@ -9,9 +9,9 @@ Requirements
 
 1. [Doctrine Extensions](https://github.com/beberlei/DoctrineExtensions)
 2. [Twitter Bootstrap](http://twitter.github.com/bootstrap/) (not mandatory)
-	* If you choose to don't use Twitter Bootstrap, it'll be necessary to create your own style.
+    * If you choose to don't use Twitter Bootstrap, it'll be necessary to create your own style.
 3. [jQuery Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) (not mandatory)
-	* If you choose to don't use Bootstrap Datepicker, please disable the datepicker as default in the configuration, "use_datepicker".
+    * If you choose to don't use Bootstrap Datepicker, please disable the datepicker as default in the configuration, "use_datepicker".
 
 
 Installation
@@ -65,19 +65,22 @@ Installation
 
 5. **(optional) Adjust configurations**
 
-	```yml
-	# application/config/config.yml
-	pedro_teixeira_grid:
-    	defaults:
-        	date:
-            	use_datepicker:   true
-	            date_format:      'dd/MM/yy'
-    	        date_time_format: 'dd/MM/yy HH:mm:ss'
-        	pagination:
-            	limit:            20
-	```
-	
-	The configuration "use_datepicker" will set the input type as "text" and attach a jQuery plugin "datepicker()" to the filter.
+    ```yml
+    # application/config/config.yml
+    pedro_teixeira_grid:
+        defaults:
+            date:
+                use_datepicker:     true
+                date_format:        'dd/MM/yy'
+                date_time_format:   'dd/MM/yy HH:mm:ss'
+            pagination:
+                limit:              20
+            export:
+                enabled             true
+                path:               '/tmp/'
+    ```
+
+    The configuration "use_datepicker" will set the input type as "text" and attach a jQuery plugin "datepicker()" to the filter.
 
 
 Create your grid
@@ -104,6 +107,11 @@ Create your grid
          */
         public function setupGrid()
         {
+            $this->addColumn('Hidden Field')
+                ->setField('hidden')
+                ->setIndex('r.hidden')
+                ->setExportOnly(true);
+
             $this->addColumn('ID')
                 ->setField('id')
                 ->setIndex('r.id')
@@ -172,7 +180,7 @@ Create your grid
             $grid = $this->get('pedroteixeira.grid')->createGrid('\PedroTeixeira\Bundle\TestBundle\Grid\TestGrid');
             $grid->setQueryBuilder($queryBuilder);
 
-            if ($grid->isAjax()) {
+            if ($grid->isResponseAnswer()) {
                 return $grid->render();
             }
 

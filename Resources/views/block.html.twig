@@ -6,12 +6,16 @@
                 <thead>
                     <tr id="row-filters-label">
                         {% for column in view.grid.columns %}
-                            <th id="{{ column.field }}" {% if column.sortable %}data-index="{{ column.index }}"{% endif %}>{{ column.name }}</th>
+                            {%  if column.exportOnly == false %}
+                                <th id="{{ column.field }}" {% if column.sortable %}data-index="{{ column.index }}"{% endif %}>{{ column.name }}</th>
+                            {% endif %}
                         {% endfor %}
                     </tr>
                     <tr class="row-filters">
                         {% for column in view.grid.columns %}
-                            <th>{{ column.renderFilter | raw }}</th>
+                            {% if column.exportOnly == false %}
+                                <th>{{ column.renderFilter | raw }}</th>
+                            {% endif %}
                         {% endfor %}
                     </tr>
                 </thead>
@@ -33,10 +37,11 @@
                                 <i class="icon-filter"></i> {% trans %}Refresh Filters{% endtrans %}
                             </button>
 
-                            {# @todo Implement #}
-                            {#<button id="export-button" class="btn btn-mini" type="button">#}
-                                {#<i class="icon-download"></i> {% trans %}Export{% endtrans %}#}
-                            {#</button>#}
+                            {% if view.grid.exportable %}
+                                <button id="export-button" class="btn btn-mini" type="button">
+                                    <i class="icon-download"></i> {% trans %}Export{% endtrans %}
+                                </button>
+                            {% endif %}
 
                             <div id="pagination" class="pull-right">
                                 <button id="pagination-back-button" class="btn btn-mini" type="button">

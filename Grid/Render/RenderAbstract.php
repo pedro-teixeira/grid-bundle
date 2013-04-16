@@ -18,6 +18,11 @@ abstract class RenderAbstract
     protected $value;
 
     /**
+     * @var bool
+     */
+    protected $stringOnly = false;
+
+    /**
      * @return string
      */
     abstract public function render();
@@ -25,7 +30,7 @@ abstract class RenderAbstract
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
      *
-     * @return \PedroTeixeira\Bundle\GridBundle\Grid\Filter\RenderAbstract
+     * @return \PedroTeixeira\Bundle\GridBundle\Grid\Render\RenderAbstract
      */
     public function __construct(\Symfony\Component\DependencyInjection\Container $container)
     {
@@ -50,5 +55,25 @@ abstract class RenderAbstract
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @param boolean $stringOnly
+     *
+     * @return RenderAbstract
+     */
+    public function setStringOnly($stringOnly)
+    {
+        $this->stringOnly = $stringOnly;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getStringOnly()
+    {
+        return $this->stringOnly;
     }
 }

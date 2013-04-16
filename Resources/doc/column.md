@@ -84,6 +84,27 @@ public function setupGrid()
 }
 ```
 
+protected $exportOnly
+------------
+
+Just show the field in the export.
+
+Default:
+
+```
+false
+```
+
+Usage:
+
+```php
+public function setupGrid()
+{
+    $this->addColumn()
+        ->setExportOnly(true);
+}
+```
+
 protected $filterType
 ------------
 

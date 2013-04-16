@@ -22,10 +22,14 @@ class YesNo extends RenderAbstract
      */
     public function render()
     {
-        if ($this->getValue() && $this->getShowYes()) {
-            return '<i class="icon-ok"></i>';
-        } else if ($this->getShowNo()) {
-            return '<i class="icon-remove"></i>';
+        if ($this->getStringOnly()) {
+            return (int) $this->getValue();
+        } else {
+            if ($this->getValue() && $this->getShowYes()) {
+                return '<i class="icon-ok"></i>';
+            } else if ($this->getShowNo()) {
+                return '<i class="icon-remove"></i>';
+            }
         }
 
         return null;
