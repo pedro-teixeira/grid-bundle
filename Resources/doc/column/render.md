@@ -27,3 +27,4 @@ Render Types
 * date_time
 * url
 * yes_no
+* currency
