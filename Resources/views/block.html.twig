@@ -29,27 +29,27 @@
                     <tr class="row-footer">
                         <td colspan="{{ view.grid.getColumnsCount }}">
                             {# Without submit button the form is not submitted with the enter key #}
-                            <button id="refresh-button" class="btn btn-mini" type="submit">
-                                <i class="icon-refresh"></i> {% trans %}Update{% endtrans %}
+                            <button id="refresh-button" class="btn btn-default btn-xs" type="submit">
+                                <i class="glyphicon glyphicon-refresh"></i> {% trans %}Update{% endtrans %}
                             </button>
 
-                            <button id="refresh-filters-button" class="btn btn-mini" type="button">
-                                <i class="icon-filter"></i> {% trans %}Refresh Filters{% endtrans %}
+                            <button id="refresh-filters-button" class="btn btn-default btn-xs" type="button">
+                                <i class="glyphicon glyphicon-filter"></i> {% trans %}Refresh Filters{% endtrans %}
                             </button>
 
                             {% if view.grid.exportable %}
-                                <button id="export-button" class="btn btn-mini" type="button">
-                                    <i class="icon-download"></i> {% trans %}Export{% endtrans %}
+                                <button id="export-button" class="btn btn-default btn-xs" type="button">
+                                    <i class="glyphicon glyphicon-download"></i> {% trans %}Export{% endtrans %}
                                 </button>
                             {% endif %}
 
                             <div id="pagination" class="pull-right">
-                                <button id="pagination-back-button" class="btn btn-mini" type="button">
-                                    <i class="icon-chevron-left"></i>
+                                <button id="pagination-back-button" class="btn btn-default btn-xs" type="button">
+                                    <i class="glyphicon glyphicon-chevron-left"></i>
                                 </button>
                                 <input id="pagination-page" type="text" value="0">
-                                <button id="pagination-forward-button" class="btn btn-mini" type="button">
-                                    <i class="icon-chevron-right"></i>
+                                <button id="pagination-forward-button" class="btn btn-default btn-xs" type="button">
+                                    <i class="glyphicon glyphicon-chevron-right"></i>
                                 </button>
 
                                 {% trans %}of{% endtrans %}

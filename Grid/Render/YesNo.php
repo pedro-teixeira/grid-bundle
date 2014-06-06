@@ -26,9 +26,9 @@ class YesNo extends RenderAbstract
             return (int) $this->getValue();
         } else {
             if ($this->getValue() && $this->getShowYes()) {
-                return '<i class="icon-ok"></i>';
+                return '<i class="glyphicon glyphicon-ok"></i>';
             } else if ($this->getShowNo()) {
-                return '<i class="icon-remove"></i>';
+                return '<i class="glyphicon glyphicon-remove"></i>';
             }
         }
 

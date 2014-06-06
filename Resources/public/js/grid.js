@@ -189,9 +189,9 @@
             })
 
             if (this.sortOrder == 'DESC') {
-                element.append(' <i class="icon-chevron-down"></i>')
+                element.append(' <i class="glyphicon glyphicon-chevron-down"></i>')
             } else {
-                element.append(' <i class="icon-chevron-up"></i>')
+                element.append(' <i class="glyphicon glyphicon-chevron-up"></i>')
             }
 
             return this
