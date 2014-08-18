@@ -5,7 +5,7 @@ namespace PedroTeixeira\Bundle\GridBundle\Grid;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-use DoctrineExtensions\Paginate\Paginate;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -325,7 +325,7 @@ abstract class GridAbstract
 
         // Don't process grid for export
         if (!$this->isExport()) {
-            $totalCount = Paginate::count($this->getQueryBuilder()->getQuery());
+            $totalCount = count(new Paginator($this->getQueryBuilder()->getQuery()));
 
             $totalPages = ceil($totalCount / $limit);
             $totalPages = ($totalPages <= 0 ? 1 : $totalPages);
