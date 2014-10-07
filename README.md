@@ -1,20 +1,17 @@
-pedro-teixeira/grid-bundle
-===
+# pedro-teixeira/grid-bundle
+
+[![Build Status](http://img.shields.io/travis/pedro-teixeira/grid-bundle.svg?style=flat)](https://travis-ci.org/pedro-teixeira/grid-bundle) [![Version](http://img.shields.io/packagist/v/pedro-teixeira/grid-bundle.svg?style=flat)](https://packagist.org/packages/pedro-teixeira/grid-bundle) [![Downloads](http://img.shields.io/packagist/dt/pedro-teixeira/grid-bundle.svg?style=flat)](https://packagist.org/packages/pedro-teixeira/grid-bundle) [![License](http://img.shields.io/packagist/l/pedro-teixeira/grid-bundle.svg?style=flat)](https://packagist.org/packages/pedro-teixeira/grid-bundle)
 
 > Ajax grid for Symfony2
 
-
-Requirements
-------------
+## Requirements
 
 1. [Twitter Bootstrap](http://twitter.github.com/bootstrap/) (not mandatory)
     * If you choose to don't use Twitter Bootstrap, it'll be necessary to create your own style.
 2. [jQuery Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) (not mandatory)
     * If you choose to don't use Bootstrap Datepicker, please disable the datepicker as default in the configuration, "use_datepicker".
 
-
-Installation
-------------
+## Installation
 
 1. **Add as a dependency in your composer file**
 
@@ -81,9 +78,7 @@ Installation
 
     The configuration "use_datepicker" will set the input type as "text" and attach a jQuery plugin "datepicker()" to the filter.
 
-
-Create your grid
-------------
+## Create your grid
 
 1. **Create the grid class**
 
@@ -201,10 +196,19 @@ Create your grid
     {{ pedroteixeira_grid(grid) }}
     ````
 
-Understanding
-------------
+## Understanding
 
 * [Grid](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/grid.md)
 * [Column](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column.md)
      * [Render](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/render.md)
      * [Filter](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/filter.md)
+
+## Continuous integration
+
+To execute locally the checks that are executed on Travis:
+
+```bash
+composer install
+find ./Grid ./DependencyInjection ./Twig -name "*.php" -exec php -l {} \;
+./bin/phpcs --extensions=php --standard=PSR2 ./Grid ./DependencyInjection ./Twig
+```

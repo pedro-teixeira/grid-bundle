@@ -35,7 +35,8 @@ class DateRange extends OperatorAbstract
                 $queryBuilder->expr()->gte(
                     $this->getIndex(),
                     ":{$this->getIndexClean()}_1"
-                ))
+                )
+            )
                 ->setParameter(
                     ":{$this->getIndexClean()}_1",
                     $date->format('Y-m-d') . ' 00:00:00'
@@ -55,7 +56,8 @@ class DateRange extends OperatorAbstract
                 $queryBuilder->expr()->lte(
                     $this->getIndex(),
                     ":{$this->getIndexClean()}_2"
-                ))
+                )
+            )
                 ->setParameter(
                     ":{$this->getIndexClean()}_2",
                     $date->format('Y-m-d') . ' 23:59:59'

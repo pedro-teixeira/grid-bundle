@@ -25,7 +25,8 @@ class NumberRange extends OperatorAbstract
                 $queryBuilder->expr()->gte(
                     $this->getIndex(),
                     ":{$this->getIndexClean()}_1"
-                ))
+                )
+            )
                 ->setParameter(
                     ":{$this->getIndexClean()}_1",
                     (float) $value[0]
@@ -38,7 +39,8 @@ class NumberRange extends OperatorAbstract
                 $queryBuilder->expr()->lte(
                     $this->getIndex(),
                     ":{$this->getIndexClean()}_2"
-                ))
+                )
+            )
                 ->setParameter(
                     ":{$this->getIndexClean()}_2",
                     (float) $value[1]

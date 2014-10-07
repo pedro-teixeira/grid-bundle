@@ -1,13 +1,10 @@
-vendor
-composer.lock
+/vendor/
+/bin/
+/composer.lock
 
-# IDE Files #
-#############
 .idea
 nbproject
 
-# OS generated files #
-######################
 .DS_Store
 .DS_Store?
 ._*

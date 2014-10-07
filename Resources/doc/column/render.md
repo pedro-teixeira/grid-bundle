@@ -1,5 +1,4 @@
-Column Render
-===
+# Column Render
 
 Define the render to show the values of the column.
 
@@ -19,8 +18,7 @@ public function setupGrid()
 }
 ```
 
-Render Types
-------------
+## Render Types
 
 * text
 * date
