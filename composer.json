@@ -1,26 +1,35 @@
 {
-    "name":"pedro-teixeira/grid-bundle",
-    "type":"symfony-bundle",
-    "description":"Ajax grid for Symfony2",
-    "keywords":["datagrid", "grid"],
-    "homepage":"http://github.com/pedro-teixeira/grid-bundle",
-    "license":"MIT",
-    "authors":[
-        {
-            "name":"Pedro Teixeira",
-            "email":"hello@pedroteixeira.io",
-            "homepage":"http://pedroteixeira.io"
-        }
-    ],
-    "require":{
-        "php":">=5.3.2",
-        "symfony/framework-bundle":"~2",
-        "doctrine/orm":"~2.2"
-    },
-    "autoload":{
-        "psr-0":{
-            "PedroTeixeira\\Bundle\\GridBundle":""
-        }
-    },
-    "target-dir":"PedroTeixeira/Bundle/GridBundle"
+  "name" : "pedro-teixeira/grid-bundle",
+  "type" : "symfony-bundle",
+  "description" : "Ajax grid for Symfony2",
+  "keywords" : [
+    "datagrid",
+    "grid"
+  ],
+  "homepage" : "http://github.com/pedro-teixeira/grid-bundle",
+  "license" : "MIT",
+  "authors" : [
+    {
+      "name" : "Pedro Teixeira",
+      "email" : "hello@pedroteixeira.io",
+      "homepage" : "https://pedroteixeira.io"
+    }
+  ],
+  "require" : {
+    "php" : ">=5.3",
+    "symfony/framework-bundle" : "~2",
+    "doctrine/orm" : "~2.2"
+  },
+  "require-dev" : {
+    "squizlabs/php_codesniffer" : "~1"
+  },
+  "autoload" : {
+    "psr-0" : {
+      "PedroTeixeira\\Bundle\\GridBundle" : ""
+    }
+  },
+  "config" : {
+    "bin-dir" : "bin"
+  },
+  "target-dir" : "PedroTeixeira/Bundle/GridBundle"
 }

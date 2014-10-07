@@ -1,5 +1,4 @@
-Column Filter
-===
+# Column Filter
 
 Define the filter type for the column.
 
@@ -20,11 +19,9 @@ public function setupGrid()
 ```
 
 
-Filter Types
-===
+## Filter Types
 
-text
-------------
+### text
 
 It's a normal input filter.
 
@@ -64,13 +61,11 @@ Operator Comparison Types:
 * not_contain
 * number_range
 
-date
-------------
+### date
 
 It's a normal date filter.
 
-date_range
-------------
+### date_range
 
 Two fields to define a date range.
 
@@ -78,8 +73,7 @@ Attributes:
 
 * inputSeparator
 
-number_range
-------------
+### number_range
 
 Two fields to define a number range.
 
@@ -87,8 +81,7 @@ Attributes:
 
 * inputSeparator
 
-select
-------------
+### select
 
 A select filter.
 
@@ -98,8 +91,6 @@ Attributes:
 * emptyChoice
 * emptyChoiceLabel
 
-yes_no
-------------
+### yes_no
 
 A select filter with "yes" and "no" options.
-

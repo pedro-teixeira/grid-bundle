@@ -1,10 +1,8 @@
-Column
-===
+# Column
 
 Column class explained.
 
-protected $name
-------------
+## protected $name
 
 Used as a column name in your grid.
 
@@ -17,8 +15,7 @@ public function setupGrid()
 }
 ```
 
-protected $field
-------------
+## protected $field
 
 It's the field name of your entity.
 
@@ -32,8 +29,7 @@ public function setupGrid()
 }
 ```
 
-protected $index
-------------
+## protected $index
 
 It's the index name used in your query builder.
 
@@ -47,8 +43,7 @@ public function setupGrid()
 }
 ```
 
-protected $twig
-------------
+## protected $twig
 
 If you want to use a twig template for this column define this field.
 
@@ -63,8 +58,7 @@ public function setupGrid()
 }
 ```
 
-protected $sortable
-------------
+## protected $sortable
 
 Set the field as sortable.
 
@@ -84,8 +78,7 @@ public function setupGrid()
 }
 ```
 
-protected $exportOnly
-------------
+## protected $exportOnly
 
 Just show the field in the export.
 
@@ -105,13 +98,11 @@ public function setupGrid()
 }
 ```
 
-protected $filterType
-------------
+## protected $filterType
 
 Referrer to [Column Filter](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/filter.md)
 
 
-protected $renderType
-------------
+## protected $renderType
 
 Referrer to [Column Render](https://github.com/pedro-teixeira/grid-bundle/tree/master/Resources/doc/column/render.md)
