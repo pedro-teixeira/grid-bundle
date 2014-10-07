@@ -22,9 +22,13 @@ class NumberRange extends FilterAbstract
      */
     public function render()
     {
-        $html  = '<input class="number-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'from" type="text" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '"> ';
+        $html  = '<input class="number-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() .
+            'from" type="text" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '"> ';
+
         $html .= $this->getInputSeparator();
-        $html .= '<input class="number-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() . 'to" type="text" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '">';
+
+        $html .= '<input class="number-input" name="' . $this->getIndex() . '[]" id="' . $this->getId() .
+            'to" type="text" placeholder="' . $this->getPlaceholder() . '" value="' . $this->getValue() . '">';
 
         return $html;
     }

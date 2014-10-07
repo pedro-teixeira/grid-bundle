@@ -14,8 +14,14 @@ class Currency extends RenderAbstract
      */
     public function render()
     {
-        $formatter = new StubNumberFormatter($this->container->getParameter('pedro_teixeira_grid.currency.locale'), StubNumberFormatter::CURRENCY);
-        return $formatter->formatCurrency($this->getValue(), $this->container->getParameter('pedro_teixeira_grid.currency.currency'));
+        $formatter = new StubNumberFormatter(
+            $this->container->getParameter('pedro_teixeira_grid.currency.locale'),
+            StubNumberFormatter::CURRENCY
+        );
+
+        return $formatter->formatCurrency(
+            $this->getValue(),
+            $this->container->getParameter('pedro_teixeira_grid.currency.currency')
+        );
     }
 }
-
