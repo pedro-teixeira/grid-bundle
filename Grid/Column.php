@@ -217,9 +217,9 @@ class Column
             return false;
         }
 
-        if(class_exists($filterType)){
+        if(class_exists($filterType)) {
             $className = $filterType;
-        }else{
+        } else {
             $className = str_replace('_', ' ', $filterType);
             $className = ucwords(strtolower($className));
             $className = str_replace(' ', '', $className);
@@ -318,9 +318,9 @@ class Column
             return false;
         }
 
-        if(class_exists($renderType)){
+        if(class_exists($renderType)) {
             $className = $renderType;
-        }else{
+        } else {
             $className = str_replace('_', ' ', $renderType);
             $className = ucwords(strtolower($className));
             $className = str_replace(' ', '', $className);
