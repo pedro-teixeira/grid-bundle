@@ -217,7 +217,7 @@ class Column
             return false;
         }
 
-        if(class_exists($filterType)) {
+        if (class_exists($filterType)) {
             $className = $filterType;
         } else {
             $className = str_replace('_', ' ', $filterType);
@@ -318,7 +318,7 @@ class Column
             return false;
         }
 
-        if(class_exists($renderType)) {
+        if (class_exists($renderType)) {
             $className = $renderType;
         } else {
             $className = str_replace('_', ' ', $renderType);
