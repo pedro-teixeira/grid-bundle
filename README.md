@@ -72,7 +72,7 @@
             pagination:
                 limit:              20
             export:
-                enabled             true
+                enabled:            true
                 path:               '/tmp/'
     ```
 
@@ -196,7 +196,7 @@
     {{ pedroteixeira_grid(grid) }}
     ````
     
-   or if you want to render the grid's html and the grid's js separately:
+   Or if you want to render the grid's html and the grid's js separately:
    
    ```twig
     {{ pedroteixeira_grid_html(grid) }}
