@@ -195,6 +195,18 @@
     ```twig
     {{ pedroteixeira_grid(grid) }}
     ````
+    
+   or if you want to render the grid's html and the grid's js separately:
+   
+   ```twig
+    {{ pedroteixeira_grid_html(grid) }}
+    
+    ...
+    
+    {{ pedroteixeira_grid_js(grid) }}
+    ````
+    
+   
 
 ## Understanding
 

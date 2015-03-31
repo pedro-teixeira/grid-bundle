@@ -217,12 +217,18 @@ class Column
             return false;
         }
 
-        $className = str_replace('_', ' ', $filterType);
-        $className = ucwords(strtolower($className));
-        $className = str_replace(' ', '', $className);
+        if (class_exists($filterType)) {
+            $className = $filterType;
+        } else {
+            $className = str_replace('_', ' ', $filterType);
+            $className = ucwords(strtolower($className));
+            $className = str_replace(' ', '', $className);
+
+            $className = 'PedroTeixeira\Bundle\GridBundle\Grid\Filter\\' . $className;
+        }
 
         try {
-            $reflection = new \ReflectionClass('PedroTeixeira\Bundle\GridBundle\Grid\Filter\\' . $className);
+            $reflection = new \ReflectionClass($className);
 
             $this->filter = $reflection->newInstance(
                 $this->container
@@ -312,12 +318,18 @@ class Column
             return false;
         }
 
-        $className = str_replace('_', ' ', $renderType);
-        $className = ucwords(strtolower($className));
-        $className = str_replace(' ', '', $className);
+        if (class_exists($renderType)) {
+            $className = $renderType;
+        } else {
+            $className = str_replace('_', ' ', $renderType);
+            $className = ucwords(strtolower($className));
+            $className = str_replace(' ', '', $className);
+
+            $className = 'PedroTeixeira\Bundle\GridBundle\Grid\Render\\' . $className;
+        }
 
         try {
-            $reflection = new \ReflectionClass('PedroTeixeira\Bundle\GridBundle\Grid\Render\\' . $className);
+            $reflection = new \ReflectionClass($className);
 
             $this->render = $reflection->newInstance(
                 $this->container

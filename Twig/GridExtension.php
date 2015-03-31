@@ -140,6 +140,20 @@ class GridExtension extends Twig_Extension
                 array(
                     'is_safe' => array('html')
                 )
+            ),
+            'pedroteixeira_grid_html' => new \Twig_Function_Method(
+                $this,
+                'renderHtmlGrid',
+                array(
+                    'is_safe' => array('html')
+                )
+            ),
+            'pedroteixeira_grid_js' => new \Twig_Function_Method(
+                $this,
+                'renderJsGrid',
+                array(
+                    'is_safe' => array('html')
+                )
             )
         );
     }
@@ -156,6 +170,44 @@ class GridExtension extends Twig_Extension
         if (!$gridView->getGrid()->isAjax()) {
             return $this->renderBlock(
                 'grid',
+                array(
+                    'view' => $gridView
+                )
+            );
+        }
+    }
+
+    /**
+     * Render (only html) grid view
+     *
+     * @param GridView $gridView
+     *
+     * @return mixed
+     */
+    public function renderHtmlGrid(GridView $gridView)
+    {
+        if (!$gridView->getGrid()->isAjax()) {
+            return $this->renderBlock(
+                'grid_html',
+                array(
+                    'view' => $gridView
+                )
+            );
+        }
+    }
+
+    /**
+     * Render (only js) grid view
+     *
+     * @param GridView $gridView
+     *
+     * @return mixed
+     */
+    public function renderJsGrid(GridView $gridView)
+    {
+        if (!$gridView->getGrid()->isAjax()) {
+            return $this->renderBlock(
+                'grid_js',
                 array(
                     'view' => $gridView
                 )

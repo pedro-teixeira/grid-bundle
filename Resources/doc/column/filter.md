@@ -94,3 +94,37 @@ Attributes:
 ### yes_no
 
 A select filter with "yes" and "no" options.
+
+## Custom Filter Type
+
+If the default filter types are not enough for your app,  you can add your own custom filter type typing the class name as the **setFilterType** argument.
+
+```php
+public function setupGrid()
+{
+    $this->addColumn()
+        ->setFilterType("MyOwnBundle\Grid\Filter\CustomFilter");
+}
+```
+
+Custom Filter Class example:
+
+```php
+
+namespace MyOwnBundle\Grid\Filter;
+use PedroTeixeira\Bundle\GridBundle\Grid\Filter\FilterAbstract
+
+/**
+ * Custom Filter
+ */
+class CustomFilter extends FilterAbstract
+{
+    /**
+     * @return string
+     */
+    public function render()
+    {
+        return '...'; // return your custom string
+    }
+}
+```
