@@ -8,7 +8,7 @@
 
 ![](https://github.com/pedro-teixeira/grid-bundle/blob/master/Resources/doc/usage.gif)
 
-* *Using [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [jQuery Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) and fake data using [Faker](https://github.com/fzaninotto/faker).*
+*Using [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [jQuery Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) and fake data using [Faker](https://github.com/fzaninotto/faker).*
 
 ## Requirements
 
