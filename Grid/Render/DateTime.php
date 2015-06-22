@@ -17,7 +17,7 @@ class DateTime extends RenderAbstract
         if ($this->getValue() instanceof \DateTime) {
 
             $transformer = new FullTransformer(
-                $this->container->getParameter('pedro_teixeira_grid.date_time_format'),
+                $this->container->getParameter('pedro_teixeira_grid.date.date_time_format'),
                 $this->container->getParameter('locale')
             );
 
