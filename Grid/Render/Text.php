@@ -12,6 +12,6 @@ class Text extends RenderAbstract
      */
     public function render()
     {
-        return $this->getValue();
+        return (string) $this->getValue();
     }
 }
